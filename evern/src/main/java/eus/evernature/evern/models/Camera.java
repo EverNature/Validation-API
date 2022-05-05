@@ -16,7 +16,7 @@ public class Camera {
 
     @Id
     @Column(name = "camara_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @OneToMany(mappedBy = "camera", cascade = CascadeType.ALL)

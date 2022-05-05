@@ -8,6 +8,7 @@ public class EvernApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(EvernApplication.class, args);
+		System.out.println(org.hibernate.Version.getVersionString());
 	}
 
 }

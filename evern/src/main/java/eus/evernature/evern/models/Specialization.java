@@ -17,15 +17,14 @@ public class Specialization {
     
     @Id
     @Column(name = "specialization_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
 
     @OneToMany(mappedBy = "specialization", cascade = CascadeType.ALL)
     private Set<Expert> experts = new HashSet<>();
 
-    @Column(name = 
-    "nombre_especializacion")
+    @Column(name = "nombre_especializacion")
     private String name;
 
     public Integer getId() {

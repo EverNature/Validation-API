@@ -10,12 +10,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 @Entity(name = "registro")
 public class Record {
     
     @Id
     @Column(name = "registro_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne
@@ -40,6 +42,8 @@ public class Record {
     @Column(name = "imp_path")
     private String imgPath;
 
-    @Column( name = "fecha_registro")
+    
+    @CreationTimestamp
+    @Column(name = "fecha_registro")
     private Timestamp recordDate;
 }

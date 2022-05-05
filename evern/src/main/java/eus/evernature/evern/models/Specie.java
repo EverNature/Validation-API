@@ -11,7 +11,7 @@ public class Specie {
 
     @Id
     @Column(name = "especie_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "esInvasora")

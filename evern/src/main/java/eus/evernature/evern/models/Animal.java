@@ -16,7 +16,7 @@ public class Animal {
     
     @Id
     @Column(name = "animal_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String name;

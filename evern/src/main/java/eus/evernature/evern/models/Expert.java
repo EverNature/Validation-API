@@ -21,7 +21,7 @@ public class Expert {
 
     @Id
     @Column(name = "experto_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String token;
