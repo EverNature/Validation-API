@@ -1,9 +1,9 @@
-// package eus.evernature.evern.repository;
+package eus.evernature.evern.repository;
 
-// import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-// import eus.evernature.evern.models.Animal;
+import eus.evernature.evern.models.Animal;
 
-// public interface AnimalRepository extends JpaRepository<Animal, Integer> {
+public interface AnimalRepository extends JpaRepository<Animal, Integer> {
     
-// }
+}
