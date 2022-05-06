@@ -42,8 +42,7 @@ public class Record {
     @Column(name = "imp_path")
     private String imgPath;
 
-    
     @CreationTimestamp
-    @Column(name = "fecha_registro")
+    @Column(name = "fecha_registro", updatable = false)
     private Timestamp recordDate;
 }

@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity(name = "experto")
 public class Expert {
@@ -58,8 +59,12 @@ public class Expert {
     private String phoneExtension;
 
     @CreationTimestamp
-    @Column(name = "fecha_registro")
+    @Column(name = "fecha_registro", updatable = false)
     private Timestamp registerDate;
+
+    @UpdateTimestamp
+    @Column(name = "fecha_modificacion")
+    private Timestamp updatedTime;
 
     public Integer getId() {
         return id;
