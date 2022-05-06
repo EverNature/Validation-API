@@ -1,43 +1,56 @@
-// package eus.evernature.evern.models;
+package eus.evernature.evern.models;
 
-// import javax.persistence.Entity;
-// import javax.persistence.GeneratedValue;
-// import javax.persistence.GenerationType;
-// import javax.persistence.Id;
+import java.util.ArrayList;
+import java.util.List;
 
-// @Entity(name = "animal")
-// public class Animal {
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+@Entity(name = "animal")
+public class Animal {
     
-//     @Id
-//     @GeneratedValue(strategy = GenerationType.AUTO)
-//     private Integer id;
+    @Id
+    @Column(name = "animal_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-//     private String name;
+    private String name;
 
-//     private boolean isInvasor;
+    private boolean isInvasor;
 
-//     public Integer getId() {
-//         return id;
-//     }
+    @OneToMany(mappedBy = "detectedAnimal", cascade = CascadeType.ALL)
+    List<Record> detectedInRecords = new ArrayList<>();
 
-//     public void setId(Integer id) {
-//         this.id = id;
-//     }
+    @OneToMany(mappedBy = "correctedAnimal", cascade = CascadeType.ALL)
+    List<Record> correctedInRecords = new ArrayList<>();
 
-//     public String getName() {
-//         return name;
-//     }
+    public Integer getId() {
+        return id;
+    }
 
-//     public void setName(String name) {
-//         this.name = name;
-//     }
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-//     public boolean isInvasor() {
-//         return isInvasor;
-//     }
+    public String getName() {
+        return name;
+    }
 
-//     public void setInvasor(boolean isInvasor) {
-//         this.isInvasor = isInvasor;
-//     }
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public boolean isInvasor() {
+        return isInvasor;
+    }
+
+    public void setInvasor(boolean isInvasor) {
+        this.isInvasor = isInvasor;
+    }
     
-// }
+}
