@@ -10,5 +10,4 @@ public class EvernApplication {
 		SpringApplication.run(EvernApplication.class, args);
 		System.out.println(org.hibernate.Version.getVersionString());
 	}
-
 }

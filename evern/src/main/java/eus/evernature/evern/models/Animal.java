@@ -24,10 +24,10 @@ public class Animal {
     private boolean isInvasor;
 
     @OneToMany(mappedBy = "detectedAnimal", cascade = CascadeType.ALL)
-    List<Record> detectedInRecords = new ArrayList<>();
+    List<Prediction> detectedInRecords = new ArrayList<>();
 
     @OneToMany(mappedBy = "correctedAnimal", cascade = CascadeType.ALL)
-    List<Record> correctedInRecords = new ArrayList<>();
+    List<Prediction> correctedInRecords = new ArrayList<>();
 
     public Integer getId() {
         return id;

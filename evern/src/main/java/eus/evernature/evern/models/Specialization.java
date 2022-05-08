@@ -20,7 +20,6 @@ public class Specialization {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-
     @OneToMany(mappedBy = "specialization", cascade = CascadeType.ALL)
     private Set<Expert> experts = new HashSet<>();
 
