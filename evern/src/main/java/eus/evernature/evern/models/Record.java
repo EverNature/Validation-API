@@ -17,7 +17,16 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Generated;
+import lombok.NoArgsConstructor;
+
 @Entity(name = "registro")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Generated
 public class Record {
     
     @Id

@@ -6,7 +6,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Generated;
+import lombok.NoArgsConstructor;
+
 @Entity(name = "especie")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Generated
 public class Specie {
 
     @Id
@@ -19,30 +28,6 @@ public class Specie {
     
     @Column(name = "nombre")
     private String name;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public boolean isInvasor() {
-        return isInvasor;
-    }
-
-    public void setInvasor(boolean isInvasor) {
-        this.isInvasor = isInvasor;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     @Override
     public int hashCode() {

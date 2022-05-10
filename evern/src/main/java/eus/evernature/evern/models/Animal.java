@@ -11,7 +11,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Generated;
+import lombok.NoArgsConstructor;
+
 @Entity(name = "animal")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Generated
 public class Animal {
     
     @Id
@@ -28,29 +37,5 @@ public class Animal {
 
     @OneToMany(mappedBy = "correctedAnimal", cascade = CascadeType.ALL)
     List<Prediction> correctedInRecords = new ArrayList<>();
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public boolean isInvasor() {
-        return isInvasor;
-    }
-
-    public void setInvasor(boolean isInvasor) {
-        this.isInvasor = isInvasor;
-    }
-    
+   
 }

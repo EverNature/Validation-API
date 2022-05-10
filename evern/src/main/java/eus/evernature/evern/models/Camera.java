@@ -11,7 +11,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Generated;
+import lombok.NoArgsConstructor;
+
 @Entity(name = "camara")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Generated
 public class Camera {
 
     @Id
@@ -27,38 +36,6 @@ public class Camera {
 
     @Column(name = "nombre_zona")
     private String zoneName;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public List<Record> getRecords() {
-        return records;
-    }
-
-    public void setRecords(List<Record> records) {
-        this.records = records;
-    }
-
-    public Integer getZoneNumber() {
-        return zoneNumber;
-    }
-
-    public void setZoneNumber(Integer zoneNumber) {
-        this.zoneNumber = zoneNumber;
-    }
-
-    public String getZoneName() {
-        return zoneName;
-    }
-
-    public void setZoneName(String zoneName) {
-        this.zoneName = zoneName;
-    }
 
     @Override
     public int hashCode() {

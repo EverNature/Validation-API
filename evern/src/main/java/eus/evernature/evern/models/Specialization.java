@@ -11,8 +11,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Generated;
+import lombok.NoArgsConstructor;
+
 
 @Entity(name = "specializacion")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Generated
 public class Specialization {
     
     @Id
@@ -25,22 +34,6 @@ public class Specialization {
 
     @Column(name = "nombre_especializacion")
     private String name;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     @Override
     public int hashCode() {

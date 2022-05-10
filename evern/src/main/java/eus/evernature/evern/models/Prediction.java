@@ -6,7 +6,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Generated;
+import lombok.NoArgsConstructor;
+
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Generated
 public class Prediction {
 
     @Id
@@ -36,54 +45,6 @@ public class Prediction {
 
     @Column(name = "es_predecido")
     private Boolean isPredicted;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Animal getDetectedAnimal() {
-        return detectedAnimal;
-    }
-
-    public void setDetectedAnimal(Animal detectedAnimal) {
-        this.detectedAnimal = detectedAnimal;
-    }
-
-    public Float getConfidence() {
-        return confidence;
-    }
-
-    public void setConfidence(Float confidence) {
-        this.confidence = confidence;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public String getPredictedImagePath() {
-        return predictedImagePath;
-    }
-
-    public void setPredictedImagePath(String predictedImagePath) {
-        this.predictedImagePath = predictedImagePath;
-    }
-
-    public Boolean getIsPredicted() {
-        return isPredicted;
-    }
-
-    public void setIsPredicted(Boolean isPredicted) {
-        this.isPredicted = isPredicted;
-    }
 
     @Override
     public int hashCode() {
