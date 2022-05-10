@@ -36,8 +36,6 @@ public class Expert {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String token;
-
     @Column(name = "rol")
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles = new ArrayList<>();
