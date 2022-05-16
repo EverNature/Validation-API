@@ -1,17 +1,9 @@
 package eus.evernature.evern;
 
-import java.nio.charset.Charset;
-import java.util.Random;
-
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import eus.evernature.evern.models.Expert;
-import eus.evernature.evern.service.expert.ExpertService;
-import eus.evernature.evern.service.role.RoleService;
 
 @SpringBootApplication
 public class EvernApplication {
