@@ -9,7 +9,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -37,6 +36,9 @@ public class RegisterController {
 
     @Autowired
     RoleServiceImpl roleService;
+
+    @Autowired
+    CustomAuthorizationFilter customAuthorizationFilter;
 
     @GetMapping("/experts")
     public ResponseEntity<List<Expert>> getUsers() {
@@ -71,7 +73,7 @@ public class RegisterController {
     public void refreshToken(HttpServletRequest req, HttpServletResponse res) {
 
         try {
-            CustomAuthorizationFilter.refreshAuthorizationToken(req, res, expertService);
+            customAuthorizationFilter.refreshAuthorizationToken(req, res);
         } catch (IOException e) {
             res.setHeader("error", e.getMessage());
             res.setStatus(HttpStatus.FORBIDDEN.value());
