@@ -1,9 +1,17 @@
 package eus.evernature.evern;
 
+import java.nio.charset.Charset;
+import java.util.Random;
+
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import eus.evernature.evern.models.Expert;
+import eus.evernature.evern.service.expert.ExpertService;
+import eus.evernature.evern.service.role.RoleService;
 
 @SpringBootApplication
 public class EvernApplication {
@@ -26,14 +34,15 @@ public class EvernApplication {
 	// @Bean
 	// CommandLineRunner run(ExpertService expertService, RoleService roleService) {
 	// 	return args -> {
-	// 		roleService.saveRole(new Role(null, "ROLE_USER"));
-	// 		roleService.saveRole(new Role(null, "ROLE_MANAGER"));
-	// 		roleService.saveRole(new Role(null, "ROLE_ADMIN"));
-	// 		roleService.saveRole(new Role(null, "ROLE_SUPER_ADMIN"));
 
-	// 		expertService.saveUser(new Expert(null, "", null, null, null, "izanarcos", "izan", "arcos", "izanarcos", "izan.arcos@gmail.com", "MU", "655699964", "+34", null, null));
-	// 		expertService.saveUser(new Expert(null, "", null, null, null, "aritzdomaika", "aritz", "domaika", "aritzdomaika", "aritz.domaika@gmail.com", "MU", "2948723984", "+23", null, null));
-	// 		expertService.saveUser(new Expert(null, "", null, null, null, "jorgedasivla", "jorge", "dasilva", "jorgedasilva", "jorge.dasilva@gmail.com", "MU", "2342881712", "+34", null, null));
+	// 		for(int i = 0; 1 < 100; i++) {
+	// 			byte[] array = new byte[7]; // length is bounded by 7
+	// 			new Random().nextBytes(array);
+	// 			String generatedString = new String(array, Charset.forName("UTF-8"));
+
+	// 			expertService.saveUser(new Expert(null, null, null, null, "izanarcos", "izan", "arcos", "izanarcos", "izan.arcos@gmail.com", "MU", "655699964", "+34", null, null));
+	// 		}
+
 
 	// 		expertService.addRoleToUser("izanarcos", "ROLE_SUPER_ADMIN");
 	// 		expertService.addRoleToUser("aritzdomaika", "ROLE_USER");
