@@ -9,7 +9,7 @@ pipeline {
 
     stage('Static Analysis') {
       steps {
-        withSonarQubeEnv('sonar-server') {
+        withSonarQubeEnv('SonarEvern') {
           sh 'mvn -f evern/ clean verify sonar:sonar -Dsonar.projectKey=evern_validation_api'
         }
       }
