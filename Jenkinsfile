@@ -3,14 +3,14 @@ pipeline {
   stages {
     stage('Build Project') {
       steps {
-        sh 'mvn clean install'
+        sh 'mvn -f evern/ clean install'
       }
     }
 
     stage('Static Analysis') {
       steps {
         withSonarQubeEnv('sonar-server') {
-          sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=evern_validation_ap'
+          sh 'mvn -f evern/ clean verify sonar:sonar -Dsonar.projectKey=evern_validation_ap'
         }
       }
     }
@@ -25,7 +25,7 @@ pipeline {
 
     stage('Unit Test') {
       steps {
-        sh 'mvn clean test'
+        sh 'mvn -f evern/ clean test'
       }
     }
   }
