@@ -10,7 +10,7 @@ pipeline {
     stage('Static Analysis') {
       steps {
         withSonarQubeEnv('sonar-server') {
-          sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=decklearn'
+          sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=evern_validation_ap'
         }
       }
     }
