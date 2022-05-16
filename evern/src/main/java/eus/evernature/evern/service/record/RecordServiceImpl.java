@@ -3,6 +3,7 @@ package eus.evernature.evern.service.record;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,11 +29,20 @@ public class RecordServiceImpl implements RecordService {
     
     @Override
     public Record saveRecord(Record record) {
-        return recordRepository.save(record);
+        log.info("Saving record into database");
+
+        try {
+            record =  recordRepository.save(record);
+        } catch (Exception e) {
+            log.error("Record not found in database with error: {}", e.getMessage());
+        }
+        
+        return record;
     }
 
     @Override
     public void addPredictionToRecord(Integer recordId, Prediction prediction) {
+        log.info("Adding prediction to record: {}", recordId);
         Record record = recordRepository.getById(recordId);
         record.getPredictions().add(prediction);
         recordRepository.save(record);
@@ -40,14 +50,23 @@ public class RecordServiceImpl implements RecordService {
 
     @Override
     public Record getRecord(Integer recordId) {
-        // TODO Auto-generated method stub
-        return null;
+        log.info("Loaging record {} from database", recordId);
+        Record record = recordRepository.getById(recordId);
+        
+        if(record == null) {
+            log.error("Record not found in the database instance");
+            throw new UsernameNotFoundException("Record not found in the database instance");
+        }
+
+        log.error("Record found in the database instance");
+
+        return record;
     }
 
     @Override
     public List<Record> getRecords() {
-        // TODO Auto-generated method stub
-        return null;
+        log.info("Loading all the records from database");
+        return recordRepository.findAll();
     }
     
 }
