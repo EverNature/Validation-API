@@ -34,6 +34,13 @@ public class Prediction {
     @JoinColumn(name="animal_corregido", referencedColumnName = "animal_id")
     private Animal correctedAnimal;
 
+    @ManyToOne
+    @JoinColumn(name="experto_id")
+    private Expert correctorExpert;
+
+    @Column(name = "es_correcto")
+    private boolean isCorrect;
+
     @Column(name = "confianza")
     private Float confidence;
 
