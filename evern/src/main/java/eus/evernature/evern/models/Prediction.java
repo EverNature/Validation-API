@@ -2,6 +2,8 @@ package eus.evernature.evern.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -20,6 +22,7 @@ public class Prediction {
 
     @Id
     @Column(name = "prediction_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne
@@ -39,7 +42,7 @@ public class Prediction {
     private Expert correctorExpert;
 
     @Column(name = "es_correcto")
-    private boolean isCorrect;
+    private Boolean isCorrect;
 
     @Column(name = "confianza")
     private Float confidence;

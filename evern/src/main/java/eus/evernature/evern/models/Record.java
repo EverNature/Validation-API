@@ -40,13 +40,6 @@ public class Record {
     @ManyToOne
     @JoinColumn(name="camara_id", updatable = false)
     private Camera camera;
-
-    @ManyToOne
-    @JoinColumn(name="experto_id")
-    private Expert correctorExpert;
-
-    @Column(name = "es_correcto")
-    private boolean isCorrect;
     
     @Column(name = "imp_path", updatable = false)
     private String imgPath;
