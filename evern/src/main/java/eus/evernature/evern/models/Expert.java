@@ -41,7 +41,7 @@ public class Expert {
     private List<Role> roles = new ArrayList<>();
 
     @OneToMany(mappedBy = "correctorExpert", cascade = CascadeType.ALL)
-    List<Record> validatedRecords = new ArrayList<>();
+    List<Prediction> validatedPredictions = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "specialization_id")
