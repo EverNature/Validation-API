@@ -9,11 +9,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import eus.evernature.evern.models.Record;
+import eus.evernature.evern.models.JsonResponses.RecordsPerHour;
 import eus.evernature.evern.service.record.RecordService;
 
+@RestController
 @RequestMapping("/api/record")
 public class RecordController {
 
@@ -25,7 +28,7 @@ public class RecordController {
         return ResponseEntity.ok(recordService.getRecord(id));
     }
 
-    @GetMapping("")
+    @GetMapping("/list")
     public ResponseEntity<List<Record>> getRecords() {
         return ResponseEntity.ok(recordService.getRecords());
     }
@@ -54,4 +57,11 @@ public class RecordController {
         return ResponseEntity.created(uri).body(record);
     }
 
+    @GetMapping("/today")
+    public ResponseEntity<List<RecordsPerHour>> getRecordsPerHour() {
+
+        List<RecordsPerHour> records = recordService.getRecordsPerHour();
+
+        return ResponseEntity.ok().body(records);
+    }
 }

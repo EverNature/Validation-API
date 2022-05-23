@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import eus.evernature.evern.models.Prediction;
+import eus.evernature.evern.models.JsonResponses.AnimalPrediction;
 import eus.evernature.evern.models.JsonResponses.DetectedVsInvasorAnimals;
+import eus.evernature.evern.models.JsonResponses.PredictionTypes;
 import eus.evernature.evern.service.prediction.PredictionService;
 
 @RestController
@@ -30,6 +32,22 @@ public class PredictionController {
         DetectedVsInvasorAnimals detectedAnimals = predictionService.getDetectedVsInvasorAnimals();
 
         return ResponseEntity.ok().body(detectedAnimals);
+    }
+
+    @GetMapping("/prediction-types")
+    public ResponseEntity<PredictionTypes> getPredictionTypes() {
+
+        PredictionTypes predictionTypes = predictionService.getPredictionTypes();
+
+        return ResponseEntity.ok().body(predictionTypes);
+    }
+
+    @GetMapping("/animal-predicted")
+    public ResponseEntity<List<AnimalPrediction>> getPredictedAnimals() {
+
+        List<AnimalPrediction> animalPrediction = predictionService.getNumPredPerAnimal();
+
+        return ResponseEntity.ok().body(animalPrediction);
     }
 
 }

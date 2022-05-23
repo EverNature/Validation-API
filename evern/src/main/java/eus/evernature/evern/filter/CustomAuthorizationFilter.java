@@ -65,7 +65,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
 
             Expert expert = expertService.getExpert(username);
 
-            String acces_token = JWT.create()
+            String access_token = JWT.create()
                     .withSubject(expert.getUsername())
                     .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
                     .withIssuer(request.getRequestURL().toString())
@@ -73,7 +73,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                     .sign(algorithm);
 
             Map<String, String> tokenMap = new HashMap<>();
-            tokenMap.put("acces_token", acces_token);
+            tokenMap.put("access_token", access_token);
             tokenMap.put("refresh_token", refresh_token);
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
