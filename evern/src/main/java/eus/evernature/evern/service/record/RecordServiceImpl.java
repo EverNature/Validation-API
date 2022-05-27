@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import eus.evernature.evern.models.Prediction;
 import eus.evernature.evern.models.Record;
-import eus.evernature.evern.models.JsonResponses.AnimalPrediction;
 import eus.evernature.evern.models.JsonResponses.RecordsPerHour;
 import eus.evernature.evern.repository.PredictionRepository;
 import eus.evernature.evern.repository.RecordRepository;
@@ -42,7 +41,8 @@ public class RecordServiceImpl implements RecordService {
         try {
             record = recordRepository.save(record);
         } catch (Exception e) {
-            log.error("Record not found in database with error: {}", e.getMessage());
+            log.error("Could not save record in database: {}", e.getMessage());
+            return null;
         }
 
         return record;

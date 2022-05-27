@@ -54,6 +54,10 @@ public class RecordController {
 
         record = recordService.saveRecord(record);
 
+        if(record == null) {
+            return ResponseEntity.notFound().build();
+        }
+
         return ResponseEntity.created(uri).body(record);
     }
 
