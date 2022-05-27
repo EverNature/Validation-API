@@ -53,6 +53,9 @@ public class Expert {
     @Column(name = "nombre")
     private String name;
 
+    @Column(name = "reset_password_token")
+    private String resetPasswordToken;
+
     @Column(name = "apellido")
     private String surname;
 

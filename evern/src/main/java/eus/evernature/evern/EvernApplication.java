@@ -28,8 +28,7 @@ public class EvernApplication {
 	// @Bean
 	// CommandLineRunner run(ExpertService expertService, RoleService roleService) {
 	// 	return args -> {
-
-	// 		expertService.saveUser(new Expert(null, null, null, null, "izanarcos", "izan", "arcos", "izanarcos",
+	// 		expertService.saveUser(new Expert(null, null, null, null, "izanarcos", "izan", "", "arcos", "izanarcos",
 	// 				"izan.arcos@gmail.com", "MU", "655699964", "+34", null, null));
 	// 	};
 	// }

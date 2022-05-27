@@ -24,18 +24,18 @@ import eus.evernature.evern.filter.CustomAuthorizationFilter;
 import eus.evernature.evern.models.Expert;
 import eus.evernature.evern.models.Role;
 import eus.evernature.evern.models.forms.RoleUserForm;
-import eus.evernature.evern.service.expert.ExpertServiceImpl;
-import eus.evernature.evern.service.role.RoleServiceImpl;
+import eus.evernature.evern.service.expert.ExpertService;
+import eus.evernature.evern.service.role.RoleService;
 
 @RestController
 @RequestMapping("/api")
 public class RegisterController {
 
     @Autowired
-    ExpertServiceImpl expertService;
+    ExpertService expertService;
 
     @Autowired
-    RoleServiceImpl roleService;
+    RoleService roleService;
 
     @Autowired
     CustomAuthorizationFilter customAuthorizationFilter;
