@@ -24,9 +24,6 @@ import lombok.NoArgsConstructor;
 @Service
 @NoArgsConstructor
 @Transactional
-/**
- * > This class implements the PredictionService interface
- */
 public class PredictionServiceImpl implements PredictionService {
 
     @Autowired
@@ -44,21 +41,19 @@ public class PredictionServiceImpl implements PredictionService {
 
     @Override
     public List<Prediction> getPredictions() {
-        List<Prediction> predictions = predictionRepository.findAll();
-        return predictions == null ? new ArrayList<>() : predictions;
+        return predictionRepository.findAll();
     }
 
     @Override
     public Prediction updatePrediction(Integer predictionId, Prediction prediction) {
-        Prediction pred = predictionRepository.getById(predictionId);
-        pred = prediction;
-        return predictionRepository.save(pred);
+        prediction.setId(predictionId);
+
+        return predictionRepository.existsById(predictionId) ? predictionRepository.save(prediction) : null;
     }
 
     @Override
     public DetectedVsInvasorAnimals getDetectedVsInvasorAnimals() {
         List<Prediction> predictions = predictionRepository.findAll();
-        predictions = predictions.equals(null) ? new ArrayList<>() : predictions;
 
         DetectedVsInvasorAnimals detectedVsInvasorAnimals = new DetectedVsInvasorAnimals();
         Integer detectedAnimals = predictions.size();
@@ -73,7 +68,6 @@ public class PredictionServiceImpl implements PredictionService {
     @Override
     public PredictionTypes getPredictionTypes() {
         List<Prediction> predictions = predictionRepository.findAll();
-        predictions = predictions.equals(null) ? new ArrayList<>() : predictions;
 
         PredictionTypes predictionTypes = new PredictionTypes();
         
