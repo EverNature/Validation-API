@@ -1,16 +1,16 @@
 pipeline {
   agent any
   stages {
-    stage('Build Project') {
+    stage('Compile') {
       steps {
-        sh 'mvn -f evern/ clean install'
+        sh 'mvn -f evern/ clean compile'
       }
     }
 
     stage('Static Analysis') {
       steps {
         withSonarQubeEnv('SonarEvern') {
-          sh 'mvn -f evern/ clean verify sonar:sonar -Dsonar.projectKey=evern_validation_api'
+          sh 'mvn sonar:sonar -f evern/ clean verify sonar:sonar -D sonar.projectKey=evern_validation_api -D maven.test.skip=true'
         }
       }
     }
@@ -23,9 +23,11 @@ pipeline {
       }
     }
 
-    stage('Unit Test') {
+    stage('Integration Test') {
       steps {
-        sh 'mvn -f evern/ clean test'
+        withCredentials([string(credentialsId: 'jasypt-secret', variable: 'JASYPT')]) {
+          sh 'mvn -f evern/ clean test -Djasypt.encryptor.password=${JASYPT}'
+        }
       }
     }
   }

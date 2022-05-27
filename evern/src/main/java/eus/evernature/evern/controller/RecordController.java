@@ -33,20 +33,6 @@ public class RecordController {
         return ResponseEntity.ok(recordService.getRecords());
     }
 
-    // @GetMapping(params = { "page", "size" })
-    // public ResponseEntity<List<Record>> getWithPagination(@RequestParam("page") int page,
-    //         @RequestParam("size") int size, UriComponentsBuilder uriBuilder,
-    //         HttpServletResponse response) {
-    //     Page<Record> resultPage = recordService.findPaginated(page, size);
-
-    //     if (page > resultPage.getTotalPages()) throw new NotFoundException();
-        
-    //     eventPublisher.publishEvent(new PaginatedResultsRetrievedEvent<Record>(
-    //         Record.class, uriBuilder, response, page, resultPage.getTotalPages(), size));
-
-    //     return resultPage.getContent();
-    // }
-
     @PostMapping("/save")
     public ResponseEntity<Record> saveRecord(@RequestBody Record record) {
         URI uri = URI
