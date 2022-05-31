@@ -5,15 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import eus.evernature.evern.models.Animal;
-import eus.evernature.evern.models.Expert;
 import eus.evernature.evern.models.Prediction;
 import eus.evernature.evern.models.JsonResponses.AnimalPrediction;
 import eus.evernature.evern.models.JsonResponses.DetectedVsInvasorAnimals;
@@ -53,13 +51,12 @@ public class PredictionServiceImpl implements PredictionService {
 
     @Override
     public DetectedVsInvasorAnimals getDetectedVsInvasorAnimals() {
-        List<Prediction> predictions = predictionRepository.findAll();
 
         DetectedVsInvasorAnimals detectedVsInvasorAnimals = new DetectedVsInvasorAnimals();
-        Integer detectedAnimals = predictions.size();
-        Long invasorAnimals = predictions.stream().filter(p -> p.getDetectedAnimal().isInvasor() == true).count();
+        Long detectedAnimals = predictionRepository.count();
+        Long invasorAnimals = getInvasorAnimalsPredictionCount();
 
-        detectedVsInvasorAnimals.setDetectados(detectedAnimals);
+        detectedVsInvasorAnimals.setDetectados(detectedAnimals.intValue());
         detectedVsInvasorAnimals.setInvasores(invasorAnimals.intValue());
 
         return detectedVsInvasorAnimals;
@@ -67,47 +64,13 @@ public class PredictionServiceImpl implements PredictionService {
 
     @Override
     public PredictionTypes getPredictionTypes() {
-        List<Prediction> predictions = predictionRepository.findAll();
-
         PredictionTypes predictionTypes = new PredictionTypes();
-        
-        Long validationPendant = predictions.stream().filter(p -> checkValidationPendant(p)).count();
-        
-        // Quitar de la lista las validation pendant o pasar la lista a las funciones como sobrecarga y mirar si no estan incluidas en la lista de pendant
-        // Creo que va a ser mejor la segunda opcion poruq la primera huele un poco a culo
-        Long validas = predictions.stream().filter(p -> checkPredictionIsCorrect(p)).count();
 
-        Long falsePositives = predictions.stream().filter(p -> checkFalsePositive(p)).count();
-
-        predictionTypes.setFalsosPositivos(falsePositives.intValue());
-        predictionTypes.setPrediccionesValidadas(validas.intValue());
-        predictionTypes.setPendientesDeValidacion(validationPendant.intValue());
+        predictionTypes.setPendientesDeValidacion(getPendantPredictionsCount().intValue());
+        predictionTypes.setPrediccionesValidadas(getCorrectPredictionsCount().intValue());
+        predictionTypes.setFalsosPositivos(getFalsePositivePredictionsCount().intValue());
 
         return predictionTypes;    
-    }
-
-    // TODO: si isCorrect es null quiere decir que todavia no lo han validado. Por lo cual o metes una respuesta custom para esto o miras
-    // si tiene experto corrector y luego el boolean.
-    // Conclusion: si no está corregida no la quieres contar. if(checkValidationPendant la sacas de la lista maybe)?
-    private boolean checkPredictionIsCorrect(Prediction pred) {
-        Optional<Boolean> optIsCorrect = Optional.ofNullable(pred.getIsCorrect());
-
-        return optIsCorrect.isPresent() && optIsCorrect.get() ? true : false;
-    }
-
-    private boolean checkFalsePositive(Prediction pred) {
-        Optional<Animal> optCorrectedAnimal = Optional.ofNullable(pred.getCorrectedAnimal());
-
-        if(pred.getDetectedAnimal().isInvasor() && optCorrectedAnimal.isPresent() && !optCorrectedAnimal.get().isInvasor())
-            return false;
-
-        return true;
-    }
-
-    private boolean checkValidationPendant(Prediction pred) {
-        Optional<Expert> optExpert = Optional.ofNullable(pred.getCorrectorExpert());
-
-        return optExpert.isPresent() ? false : true;
     }
 
     @Override
@@ -137,4 +100,38 @@ public class PredictionServiceImpl implements PredictionService {
 
         return animalPredictions;
     }
-}
+
+    private Long getPendantPredictionsCount() {
+        Specification<Prediction> spec = Specification.where((root, query, cb) -> cb.isNull(root.get("correctorExpert")));
+        return predictionRepository.count(spec);
+    }
+
+    private Long getCorrectPredictionsCount() {
+        Specification<Prediction> spec = Specification.where((root, query, cb) -> cb.isNotNull(root.get("correctorExpert")));
+        Specification<Prediction> specIsCorrect = Specification.where((root, query, cb) -> cb.isTrue(root.get("isCorrect")));
+
+
+        Specification<Prediction> findSpec = Specification.where(spec).and(specIsCorrect);
+        
+        return predictionRepository.count(findSpec);
+    }
+
+    private Long getFalsePositivePredictionsCount() {
+        Specification<Prediction> specIsInvasor = Specification.where((root, query, cb) -> cb.isTrue(root.get("detectedAnimal").get("isInvasor")));
+        Specification<Prediction> specIsCorrected = Specification.where((root, query, cb) -> cb.isNotNull(root.get("correctedAnimal")));
+        Specification<Prediction> specIsNotInvasor = Specification.where((root, query, cb) -> cb.isFalse(root.get("correctedAnimal").get("isInvasor")));
+
+
+        Specification<Prediction> findSpec = Specification.where(specIsInvasor).and(specIsCorrected).and(specIsNotInvasor);
+        
+        return predictionRepository.count(findSpec);
+    }
+
+    private Long getInvasorAnimalsPredictionCount() {
+        Specification<Prediction> specIsInvasor = Specification.where((root, query, cb) -> cb.isTrue(root.get("detectedAnimal").get("isInvasor")));
+
+        Specification<Prediction> findSpec = Specification.where(specIsInvasor);
+        
+        return predictionRepository.count(findSpec);
+    }
+} 

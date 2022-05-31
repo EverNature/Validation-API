@@ -1,9 +1,14 @@
 package eus.evernature.evern;
 
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import eus.evernature.evern.models.Expert;
+import eus.evernature.evern.service.expert.ExpertService;
+import eus.evernature.evern.service.role.RoleService;
 
 @SpringBootApplication
 public class EvernApplication {
@@ -24,7 +29,7 @@ public class EvernApplication {
 	 * @param expertService The service that will be used to save the user.
 	 * @param roleService   The service that will be used to save the roles.
 	 * @return A CommandLineRunner object.
-	 */
+	*/
 	// @Bean
 	// CommandLineRunner run(ExpertService expertService, RoleService roleService) {
 	// 	return args -> {

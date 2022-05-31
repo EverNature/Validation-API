@@ -57,6 +57,12 @@ public class ExpertServiceImpl implements ExpertService, UserDetailsService {
     public Expert saveUser(Expert expert) {
         log.info("Saving new user to the database");
         expert.setPassword(passwordEncoder.encode(expert.getPassword()));
+
+        if(expertRepository.findByUsername(expert.getUsername()) != null) {
+            log.error("User already exists in the database");
+            throw new RuntimeException("User already exists in the database");
+        }
+
         return expertRepository.save(expert);
     }
 
