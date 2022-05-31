@@ -3,6 +3,8 @@ package eus.evernature.evern.controller;
 import java.net.URI;
 import java.util.List;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +24,9 @@ public class RecordController {
 
     @Autowired
     RecordService recordService;
+
+    @Autowired
+    ObjectMapper mapper;
 
     @GetMapping
     public ResponseEntity<Record> getRecord(@RequestBody Integer id) {
