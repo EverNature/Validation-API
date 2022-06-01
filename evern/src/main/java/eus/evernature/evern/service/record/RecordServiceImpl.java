@@ -64,9 +64,9 @@ public class RecordServiceImpl implements RecordService {
         if (record == null) {
             log.error("Record not found in the database instance");
             throw new UsernameNotFoundException("Record not found in the database instance");
+        } else {
+            log.error("Record found in the database instance");
         }
-
-        log.error("Record found in the database instance");
 
         return record;
     }
