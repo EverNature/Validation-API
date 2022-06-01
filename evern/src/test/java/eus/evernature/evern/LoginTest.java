@@ -133,24 +133,18 @@ class LoginTest {
     params.add("username", username);
     params.add("password", password);
 
-    MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post(url)
+    mockMvc.perform(MockMvcRequestBuilders.post(url)
         .sessionAttr(TOKEN_ATTR_NAME, csrfToken).param(csrfToken.getParameterName(), csrfToken.getToken())
         .params(params))
-        .andExpect(MockMvcResultMatchers.status().isOk())
-        .andReturn();
-
-    String content = result.getResponse().getContentAsString();
-
-    TokenDuple tokenDuple = new Gson().fromJson(content, TokenDuple.class);
+        .andExpect(MockMvcResultMatchers.status().isOk());
 
     String accesToken = "Bearer ".concat("tokentoskenasksfku3278r3ife");
 
     url = "/api/prediction/prediction-types";
 
-    result = mockMvc.perform(MockMvcRequestBuilders.get(url)
+    mockMvc.perform(MockMvcRequestBuilders.get(url)
     .sessionAttr(TOKEN_ATTR_NAME, csrfToken).param(csrfToken.getParameterName(), csrfToken.getToken())
     .header("Authorization", accesToken))
-    .andExpect(MockMvcResultMatchers.status().isForbidden())
-    .andReturn();
+    .andExpect(MockMvcResultMatchers.status().isForbidden());
   }
 }
