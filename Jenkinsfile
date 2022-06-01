@@ -7,28 +7,30 @@ pipeline {
       }
     }
 
-    stage('Static Analysis') {
-      steps {
-        withSonarQubeEnv('SonarEvern') {
-          sh 'mvn sonar:sonar -f evern/ clean verify sonar:sonar -D sonar.projectKey=sonar_token -D maven.test.skip=true'
-        }
-      }
-    }
-
-    stage('Quality Gate') {
-      steps {
-        timeout(time: 2, unit: 'MINUTES') {
-          waitForQualityGate true
-        }
-      }
-    }
-
     stage('Integration Test') {
       steps {
         withCredentials([string(credentialsId: 'jasypt-secret', variable: 'JASYPT')]) {
-          sh 'mvn -f evern/ clean test -Djasypt.encryptor.password=${JASYPT}'
+          sh 'mvn -f evern/ clean test -D jasypt.encryptor.password=${JASYPT}'
         }
       }
+    }
+
+    stage('Static Analysis') {
+      steps {
+        withSonarQubeEnv('EvernSonar') {
+          withCredentials([string(credentialsId: 'SonarAdminToken', variable: 'SONAR_TOKEN')]) {
+            sh 'mvn sonar:sonar -f evern/ -D sonar.projectKey=validationApi -D sonar.host.url=https://sonarqube.evern.eus -D sonar.java.coveragePlugin=jacoco -D sonar.login=${SONAR_TOKEN} -D maven.test.skip=true'
+          }
+        }
+      }
+    }
+
+    stage('QualityGate') {
+        steps {
+            timeout(time: 10, unit: 'SECONDS') {
+                waitForQualityGate abortPipeline: true, credentialsId: 'SonarAdminToken'
+            }
+        }
     }
   }
   
