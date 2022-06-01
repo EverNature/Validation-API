@@ -1,4 +1,4 @@
-package eus.evernature.evern.models.JsonResponses;
+package eus.evernature.evern.models.json_responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

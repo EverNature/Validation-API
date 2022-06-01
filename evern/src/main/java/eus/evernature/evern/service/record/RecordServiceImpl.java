@@ -16,8 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import eus.evernature.evern.models.Prediction;
 import eus.evernature.evern.models.Record;
-import eus.evernature.evern.models.JsonResponses.RecordsPerHour;
-import eus.evernature.evern.repository.PredictionRepository;
+import eus.evernature.evern.models.json_responses.RecordsPerHour;
 import eus.evernature.evern.repository.RecordRepository;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,9 +29,6 @@ public class RecordServiceImpl implements RecordService {
 
     @Autowired
     RecordRepository recordRepository;
-
-    @Autowired
-    PredictionRepository PredictionRepository;
 
     @Override
     public Record saveRecord(Record record) {
@@ -84,13 +80,11 @@ public class RecordServiceImpl implements RecordService {
 
     @Override
     public List<RecordsPerHour> getRecordsPerHour() {
-        List<RecordsPerHour> recordsPerHours = new ArrayList<>();
-
         List<Record> records = recordRepository.findAll();
 
         List<Record> todayRecords = records.stream().filter(r -> checkIfDateIsToday(r)).collect(Collectors.toList());
 
-        recordsPerHours = getRecordsPerHourList(todayRecords);
+        List<RecordsPerHour> recordsPerHours = getRecordsPerHourList(todayRecords);
 
         return recordsPerHours;
     }

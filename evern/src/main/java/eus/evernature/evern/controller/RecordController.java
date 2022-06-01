@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import eus.evernature.evern.models.Record;
-import eus.evernature.evern.models.JsonResponses.RecordsPerHour;
+import eus.evernature.evern.models.json_responses.RecordsPerHour;
 import eus.evernature.evern.service.record.RecordService;
 
 @RestController
@@ -39,17 +39,17 @@ public class RecordController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<Record> saveRecord(@RequestBody Record record) {
+    public ResponseEntity<Record> saveRecord(@RequestBody Record newRecord) {
         URI uri = URI
                 .create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/record/save").toUriString());
 
-        record = recordService.saveRecord(record);
+        newRecord = recordService.saveRecord(newRecord);
 
-        if(record == null) {
+        if(newRecord == null) {
             return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.created(uri).body(record);
+        return ResponseEntity.created(uri).body(newRecord);
     }
 
     @GetMapping("/today")

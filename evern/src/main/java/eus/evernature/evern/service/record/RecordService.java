@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 
 import eus.evernature.evern.models.Prediction;
 import eus.evernature.evern.models.Record;
-import eus.evernature.evern.models.JsonResponses.RecordsPerHour;
+import eus.evernature.evern.models.json_responses.RecordsPerHour;
 
 public interface RecordService {
     Record saveRecord(Record record);

@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import eus.evernature.evern.models.Prediction;
-import eus.evernature.evern.models.JsonResponses.AnimalPrediction;
-import eus.evernature.evern.models.JsonResponses.DetectedVsInvasorAnimals;
-import eus.evernature.evern.models.JsonResponses.PredictionTypes;
+import eus.evernature.evern.models.json_responses.AnimalPrediction;
+import eus.evernature.evern.models.json_responses.DetectedVsInvasorAnimals;
+import eus.evernature.evern.models.json_responses.PredictionTypes;
 import eus.evernature.evern.service.prediction.PredictionService;
 
 @RestController

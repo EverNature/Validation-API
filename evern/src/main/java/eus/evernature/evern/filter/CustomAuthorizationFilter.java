@@ -19,8 +19,6 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.fasterxml.jackson.core.exc.StreamWriteException;
-import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,29 +41,31 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class CustomAuthorizationFilter extends OncePerRequestFilter {
 
+    private final String RESPONSE_TOKEN_HEADER = "Bearer ";
+
     @Autowired
     private ExpertService expertService;
 
     public void refreshAuthorizationToken(HttpServletRequest request, HttpServletResponse response)
-            throws StreamWriteException, DatabindException, IOException {
+            throws IOException {
 
         String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
 
-        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer "))
+        if (authorizationHeader == null || !authorizationHeader.startsWith(RESPONSE_TOKEN_HEADER))
             throw new RuntimeException("Refresh token is missing");
 
         try {
-            String refresh_token = authorizationHeader.substring("Bearer ".length());
+            String refreshToken = authorizationHeader.substring(RESPONSE_TOKEN_HEADER.length());
             Algorithm algorithm = JwtAlgorithmProvider.getHMAC256A();
 
             JWTVerifier verifier = JWT.require(algorithm).build();
 
-            DecodedJWT decodedJWT = verifier.verify(refresh_token);
+            DecodedJWT decodedJWT = verifier.verify(refreshToken);
             String username = decodedJWT.getSubject();
 
             Expert expert = expertService.getExpert(username);
 
-            String access_token = JWT.create()
+            String accessToken = JWT.create()
                     .withSubject(expert.getUsername())
                     .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
                     .withIssuer(request.getRequestURL().toString())
@@ -73,8 +73,8 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                     .sign(algorithm);
 
             Map<String, String> tokenMap = new HashMap<>();
-            tokenMap.put("access_token", access_token);
-            tokenMap.put("refresh_token", refresh_token);
+            tokenMap.put("access_token", accessToken);
+            tokenMap.put("refresh_token", refreshToken);
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
             new ObjectMapper().writeValue(response.getOutputStream(), tokenMap);
@@ -103,13 +103,13 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
 
         String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
 
-        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+        if (authorizationHeader == null || !authorizationHeader.startsWith(RESPONSE_TOKEN_HEADER)) {
             filterChain.doFilter(request, response);
             return;
         }
 
         try {
-            String token = authorizationHeader.substring("Bearer ".length());
+            String token = authorizationHeader.substring(RESPONSE_TOKEN_HEADER.length());
             Algorithm algorithm = JwtAlgorithmProvider.getHMAC256A();
 
             JWTVerifier verifier = JWT.require(algorithm).build();
@@ -122,9 +122,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
             Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
             try {
-                Stream.of(roles).forEach(role -> {
-                    authorities.add(new SimpleGrantedAuthority(role));
-                });
+                Stream.of(roles).forEach(role -> authorities.add(new SimpleGrantedAuthority(role)));
             } catch (Exception e) {
                 log.info("User logged without roles");
             }

@@ -13,9 +13,9 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import eus.evernature.evern.models.Prediction;
-import eus.evernature.evern.models.JsonResponses.AnimalPrediction;
-import eus.evernature.evern.models.JsonResponses.DetectedVsInvasorAnimals;
-import eus.evernature.evern.models.JsonResponses.PredictionTypes;
+import eus.evernature.evern.models.json_responses.AnimalPrediction;
+import eus.evernature.evern.models.json_responses.DetectedVsInvasorAnimals;
+import eus.evernature.evern.models.json_responses.PredictionTypes;
 import eus.evernature.evern.repository.PredictionRepository;
 import lombok.NoArgsConstructor;
 
@@ -23,6 +23,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Transactional
 public class PredictionServiceImpl implements PredictionService {
+
+
+    private final String IS_INVASOR = "isInvasor";
+    private final String IS_CORRECT = "isCorrect";
+    private final String CORRECTED_ANIMAL = "correctedAnimal";
+    private final String DETECTED_ANIMAL = "detectedAnimal";
+    private final String CORRECTOR_EXPERT = "correctorExpert";
+
+
 
     @Autowired
     PredictionRepository predictionRepository;
@@ -102,13 +111,13 @@ public class PredictionServiceImpl implements PredictionService {
     }
 
     private Long getPendantPredictionsCount() {
-        Specification<Prediction> spec = Specification.where((root, query, cb) -> cb.isNull(root.get("correctorExpert")));
+        Specification<Prediction> spec = Specification.where((root, query, cb) -> cb.isNull(root.get(CORRECTOR_EXPERT)));
         return predictionRepository.count(spec);
     }
 
     private Long getCorrectPredictionsCount() {
-        Specification<Prediction> spec = Specification.where((root, query, cb) -> cb.isNotNull(root.get("correctorExpert")));
-        Specification<Prediction> specIsCorrect = Specification.where((root, query, cb) -> cb.isTrue(root.get("isCorrect")));
+        Specification<Prediction> spec = Specification.where((root, query, cb) -> cb.isNotNull(root.get(CORRECTOR_EXPERT)));
+        Specification<Prediction> specIsCorrect = Specification.where((root, query, cb) -> cb.isTrue(root.get(IS_CORRECT)));
 
 
         Specification<Prediction> findSpec = Specification.where(spec).and(specIsCorrect);
@@ -117,10 +126,9 @@ public class PredictionServiceImpl implements PredictionService {
     }
 
     private Long getFalsePositivePredictionsCount() {
-        Specification<Prediction> specIsInvasor = Specification.where((root, query, cb) -> cb.isTrue(root.get("detectedAnimal").get("isInvasor")));
-        Specification<Prediction> specIsCorrected = Specification.where((root, query, cb) -> cb.isNotNull(root.get("correctedAnimal")));
-        Specification<Prediction> specIsNotInvasor = Specification.where((root, query, cb) -> cb.isFalse(root.get("correctedAnimal").get("isInvasor")));
-
+        Specification<Prediction> specIsInvasor = Specification.where((root, query, cb) -> cb.isTrue(root.get(DETECTED_ANIMAL).get(IS_INVASOR)));
+        Specification<Prediction> specIsCorrected = Specification.where((root, query, cb) -> cb.isNotNull(root.get(CORRECTED_ANIMAL)));
+        Specification<Prediction> specIsNotInvasor = Specification.where((root, query, cb) -> cb.isFalse(root.get(CORRECTED_ANIMAL).get(IS_INVASOR)));
 
         Specification<Prediction> findSpec = Specification.where(specIsInvasor).and(specIsCorrected).and(specIsNotInvasor);
         
@@ -128,7 +136,7 @@ public class PredictionServiceImpl implements PredictionService {
     }
 
     private Long getInvasorAnimalsPredictionCount() {
-        Specification<Prediction> specIsInvasor = Specification.where((root, query, cb) -> cb.isTrue(root.get("detectedAnimal").get("isInvasor")));
+        Specification<Prediction> specIsInvasor = Specification.where((root, query, cb) -> cb.isTrue(root.get(DETECTED_ANIMAL).get(IS_INVASOR)));
 
         Specification<Prediction> findSpec = Specification.where(specIsInvasor);
         
