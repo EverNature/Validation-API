@@ -33,10 +33,10 @@ public class RecordController {
         return ResponseEntity.ok(recordService.getRecord(id));
     }
 
-    @GetMapping("/list")
-    public ResponseEntity<List<Record>> getRecords() {
-        return ResponseEntity.ok(recordService.getRecords());
-    }
+    // @GetMapping("/list")
+    // public ResponseEntity<List<Record>> getRecords() {
+    //     return ResponseEntity.ok(recordService.getRecords());
+    // }
 
     @PostMapping("/save")
     public ResponseEntity<Record> saveRecord(@RequestBody Record newRecord) {
