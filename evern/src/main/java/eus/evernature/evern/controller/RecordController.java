@@ -38,6 +38,13 @@ public class RecordController {
     //     return ResponseEntity.ok(recordService.getRecords());
     // }
 
+
+/**
+ * This function is used to save a record to the database
+ * 
+ * @param newRecord the record that is being saved
+ * @return A ResponseEntity object is being returned.
+ */
     @PostMapping("/save")
     public ResponseEntity<Record> saveRecord(@RequestBody Record newRecord) {
         URI uri = URI

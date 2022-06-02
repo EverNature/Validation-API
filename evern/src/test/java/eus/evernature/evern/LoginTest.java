@@ -2,10 +2,6 @@ package eus.evernature.evern;
 
 import static org.junit.Assert.assertNotNull;
 
-import java.net.http.HttpHeaders;
-
-import com.google.gson.Gson;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -19,6 +15,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+
+import com.google.gson.Gson;
 
 import eus.evernature.evern.models.json_responses.TokenDuple;
 

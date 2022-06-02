@@ -82,6 +82,7 @@ public class PredictionServiceImpl implements PredictionService {
         return predictionTypes;    
     }
 
+    // TODO: Refactor this method and optimize query
     @Override
     public List<AnimalPrediction> getNumPredPerAnimal() {
         List<AnimalPrediction> animalPredictions = new ArrayList<>();
