@@ -25,6 +25,10 @@ public class PredictionController {
     //     return ResponseEntity.ok().body(predictionService.getPredictions());
     // }
 
+    /** 
+     * Esta función devuelve una lista de predicciones de animales.
+     * @return ResponseEntity<DetectedVsInvasorAnimals>
+     */
     @GetMapping("/detected-species")
     public ResponseEntity<DetectedVsInvasorAnimals> getDetectedAndInvasorSpecies() {
 
@@ -33,6 +37,11 @@ public class PredictionController {
         return ResponseEntity.ok().body(detectedAnimals);
     }
 
+    
+    /** 
+     * Esta función devuelve una lista de predicciones de animales.
+     * @return ResponseEntity<PredictionTypes>
+     */
     @GetMapping("/prediction-types")
     public ResponseEntity<PredictionTypes> getPredictionTypes() {
 
@@ -41,6 +50,11 @@ public class PredictionController {
         return ResponseEntity.ok().body(predictionTypes);
     }
 
+    
+    /** 
+     * Esta función devuelve la cantidad de predicciones realizadas por cada especie
+     * @return ResponseEntity<List<AnimalPrediction>>
+     */
     @GetMapping("/animal-predicted")
     public ResponseEntity<List<AnimalPrediction>> getPredictedAnimals() {
 
