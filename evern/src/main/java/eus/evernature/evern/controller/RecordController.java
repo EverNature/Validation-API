@@ -28,17 +28,33 @@ public class RecordController {
     @Autowired
     ObjectMapper mapper;
 
+    
+    /** 
+     * Esta función devuelve un response con el resultado de la consulta de los registros de la tabla record.
+     * @param id
+     * @return ResponseEntity<Record>
+     */
     @GetMapping
     public ResponseEntity<Record> getRecord(@RequestBody Integer id) {
         return ResponseEntity.ok(recordService.getRecord(id));
     }
 
-    /**
-     * This function is used to save a record to the database
-     * 
-     * @param newRecord the record that is being saved
-     * @return A ResponseEntity object is being returned.
+    
+    /** 
+     * @return ResponseEntity<Record>
      */
+    // @GetMapping("/list")
+    // public ResponseEntity<List<Record>> getRecords() {
+    //     return ResponseEntity.ok(recordService.getRecords());
+    // }
+
+
+/**
+ * This function is used to save a record to the database
+ * 
+ * @param newRecord the record that is being saved
+ * @return A ResponseEntity object is being returned.
+ */
     @PostMapping("/save")
     public ResponseEntity<Record> saveRecord(@RequestBody String newRecordJson) {
         URI uri = URI
@@ -53,6 +69,11 @@ public class RecordController {
         return ResponseEntity.created(uri).build();
     }
 
+    
+    /** 
+     * Esta función devuelve un response las imagenes realidas por las camaras por horas.
+     * @return ResponseEntity<List<RecordsPerHour>>
+     */
     @GetMapping("/today")
     public ResponseEntity<List<RecordsPerHour>> getRecordsPerHour() {
 
