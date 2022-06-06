@@ -15,4 +15,6 @@ public interface RecordService {
     List<Record> getRecords();
     Page<Record> findPaginated(int page, int size);
     List<RecordsPerHour> getRecordsPerHour();
+
+    boolean createNewRecord(String json);
 }

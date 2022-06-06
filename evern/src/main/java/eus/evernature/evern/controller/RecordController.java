@@ -33,30 +33,24 @@ public class RecordController {
         return ResponseEntity.ok(recordService.getRecord(id));
     }
 
-    // @GetMapping("/list")
-    // public ResponseEntity<List<Record>> getRecords() {
-    //     return ResponseEntity.ok(recordService.getRecords());
-    // }
-
-
-/**
- * This function is used to save a record to the database
- * 
- * @param newRecord the record that is being saved
- * @return A ResponseEntity object is being returned.
- */
+    /**
+     * This function is used to save a record to the database
+     * 
+     * @param newRecord the record that is being saved
+     * @return A ResponseEntity object is being returned.
+     */
     @PostMapping("/save")
-    public ResponseEntity<Record> saveRecord(@RequestBody Record newRecord) {
+    public ResponseEntity<Record> saveRecord(@RequestBody String newRecordJson) {
         URI uri = URI
                 .create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/record/save").toUriString());
 
-        newRecord = recordService.saveRecord(newRecord);
+        boolean created = recordService.createNewRecord(newRecordJson);
 
-        if(newRecord == null) {
+        if (!created) {
             return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.created(uri).body(newRecord);
+        return ResponseEntity.created(uri).build();
     }
 
     @GetMapping("/today")

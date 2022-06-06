@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.joda.time.DateTime;
@@ -14,10 +15,20 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.gson.Gson;
+
+import eus.evernature.evern.models.Animal;
+import eus.evernature.evern.models.Camera;
 import eus.evernature.evern.models.Prediction;
 import eus.evernature.evern.models.Record;
+import eus.evernature.evern.models.DTO.PredictionDTO;
+import eus.evernature.evern.models.DTO.RecordDTO;
 import eus.evernature.evern.models.json_responses.RecordsPerHour;
 import eus.evernature.evern.repository.RecordRepository;
+import eus.evernature.evern.service.animal.AnimalService;
+import eus.evernature.evern.service.camera.CameraService;
+import eus.evernature.evern.service.image.ImageService;
+import eus.evernature.evern.service.prediction.PredictionService;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,6 +40,18 @@ public class RecordServiceImpl implements RecordService {
 
     @Autowired
     RecordRepository recordRepository;
+
+    @Autowired
+    ImageService imageService;
+
+    @Autowired
+    CameraService cameraService;
+
+    @Autowired
+    AnimalService animalService;
+
+    @Autowired
+    PredictionService predictionService;
 
     @Override
     public Record saveRecord(Record record) {
@@ -129,5 +152,72 @@ public class RecordServiceImpl implements RecordService {
 
         return false;
 
+    }
+
+    public Record convertDtoToDataClass(RecordDTO recordDto) {
+
+        Record record = new Record();
+
+        Optional<Camera> camera = cameraService.getCameraById(recordDto.getCameraId());
+
+        if (camera.isPresent()) {
+            record.setCamera(camera.get());
+        }
+
+        String fullImgPath = imageService.saveImage(recordDto.getImage());
+
+        record.setImgPath(fullImgPath);
+
+        return record;
+    }
+
+    @Override
+    public boolean createNewRecord(String json) {
+        RecordDTO recordDto = new Gson().fromJson(json, RecordDTO.class);
+
+        Record record = convertDtoToDataClass(recordDto);
+
+        record = mapAndAddPredictionsToRecord(record, recordDto);
+
+        saveRecord(record);
+
+        return true;
+    }
+
+    private Record mapAndAddPredictionsToRecord(Record record, RecordDTO recordDto) {
+        List<Prediction> predictions = new ArrayList<>();
+
+        for (PredictionDTO predictionDto : recordDto.getPredictions()) {
+            Prediction prediction = convertToPredictionClass(predictionDto);
+
+            prediction = predictionService.savePrediction(prediction);
+
+            predictions.add(prediction);
+        }
+
+        record.setPredictions(predictions);
+
+        return record;
+    }
+
+    private Prediction convertToPredictionClass(PredictionDTO predictionDto) {
+        Prediction prediction = new Prediction();
+
+        Float confidence = predictionDto.getConfidence();
+        String message = predictionDto.getMessage();
+        boolean isPredicted = predictionDto.getIsPredicted();
+
+        Optional<Animal> animal = animalService.getAnimalByName(predictionDto.getDetectedAnimal());
+
+        if (animal.isPresent()) {
+            prediction.setDetectedAnimal(animal.get());
+        }
+
+        prediction.setConfidence(confidence);
+        prediction.setMessage(message);
+        prediction.setIsPredicted(isPredicted);
+        prediction.setPredictedImagePath(imageService.saveImage(predictionDto.getImage()));
+
+        return prediction;
     }
 }
