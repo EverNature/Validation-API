@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ImageServiceImpl implements ImageService {
 
     // TODO: Change this path before deployment
-    private final String IMAGE_FOLDER = "C:/Users/Izan/Desktop/Images";
+    private final String IMAGE_FOLDER = "/uploads/";
 
     @Override
     public String saveImage(String image) {
