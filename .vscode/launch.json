@@ -1,0 +1,13 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch Evern api aplication",
+            "request": "launch",
+            "mainClass": "eus.evernature.evern.EvernApplication",
+            "projectName": "evern",
+            "vmArgs": "-Djasypt.encryptor.password=EverNatureSecretKey"
+        }
+    ]
+}
