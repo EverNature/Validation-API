@@ -50,7 +50,7 @@ public class ImageServiceImpl implements ImageService {
             throw new RuntimeException("Could not write image in " + file.getAbsolutePath());
         }
 
-        return file.getAbsolutePath();
+        return filename;
     }
 
     @Override
