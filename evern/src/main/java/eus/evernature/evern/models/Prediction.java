@@ -1,5 +1,7 @@
 package eus.evernature.evern.models;
 
+import java.sql.Timestamp;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -56,4 +60,7 @@ public class Prediction {
     @Column(name = "es_predecido")
     private Boolean isPredicted;
 
+    @CreationTimestamp
+    @Column(name = "fecha_prediccion", updatable = false)
+    private Timestamp predictionDate;
 }
