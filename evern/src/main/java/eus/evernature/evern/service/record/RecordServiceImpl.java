@@ -128,7 +128,7 @@ public class RecordServiceImpl implements RecordService {
             }
         }
 
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < 24; i++) {
             RecordsPerHour rph = new RecordsPerHour();
             Integer numImages = hourRecordMap.get(i);
 
