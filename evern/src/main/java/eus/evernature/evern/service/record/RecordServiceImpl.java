@@ -112,6 +112,15 @@ public class RecordServiceImpl implements RecordService {
         return recordsPerHours;
     }
 
+    @Override
+    public List<RecordsPerHour> getRecordsPerHourHistory() {
+        List<Record> records = recordRepository.findAll();
+
+        List<RecordsPerHour> recordsPerHours = getRecordsPerHourList(records);
+
+        return recordsPerHours;
+    }
+
     private List<RecordsPerHour> getRecordsPerHourList(List<Record> todayRecords) {
         List<RecordsPerHour> recordsPerHours = new ArrayList<>();
         Map<Integer, Integer> hourRecordMap = new HashMap<>();
@@ -123,12 +132,16 @@ public class RecordServiceImpl implements RecordService {
             hour = recordDate.getHourOfDay();
 
             if (hourRecordMap.get(hour) != null) {
-                int ammount = hourRecordMap.get(hour);
+                Integer ammount = hourRecordMap.get(hour);
+                log.info("Hora: {}", hour);
                 hourRecordMap.put(hour, ++ammount);
+
+            } else {
+                hourRecordMap.put(hour, 1);
             }
         }
 
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < 24; i++) {
             RecordsPerHour rph = new RecordsPerHour();
             Integer numImages = hourRecordMap.get(i);
 

@@ -84,13 +84,13 @@ class LoginTest {
     .andExpect(MockMvcResultMatchers.status().isOk())
     .andReturn();
 
-    url = "/api/prediction/animal-predicted";
+    // url = "/api/prediction/animal-predicted";
 
-    result = mockMvc.perform(MockMvcRequestBuilders.get(url)
-    .sessionAttr(TOKEN_ATTR_NAME, csrfToken).param(csrfToken.getParameterName(), csrfToken.getToken())
-    .header("Authorization", accesToken))
-    .andExpect(MockMvcResultMatchers.status().isOk())
-    .andReturn();
+    // result = mockMvc.perform(MockMvcRequestBuilders.get(url)
+    // .sessionAttr(TOKEN_ATTR_NAME, csrfToken).param(csrfToken.getParameterName(), csrfToken.getToken())
+    // .header("Authorization", accesToken))
+    // .andExpect(MockMvcResultMatchers.status().isOk())
+    // .andReturn();
   }
 
   @Test

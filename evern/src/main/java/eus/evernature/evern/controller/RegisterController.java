@@ -31,35 +31,6 @@ public class RegisterController {
     @Autowired
     CustomAuthorizationFilter customAuthorizationFilter;
 
-    // @GetMapping("/experts")
-    // public ResponseEntity<List<Expert>> getUsers() {
-
-    //     List<Expert> experts = expertService.getExperts();
-
-    //     if (experts.isEmpty())
-    //         return ResponseEntity.noContent().build();
-
-    //     return ResponseEntity.ok().body(experts);
-    // }
-
-    // @PostMapping("/expert/save")
-    // public ResponseEntity<Expert> saveUser(@RequestBody Expert expert) {
-    //     URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/user/save").toUriString());
-    //     return ResponseEntity.created(uri).body(expertService.saveUser(expert));
-    // }
-
-    // @PostMapping("/role/save")
-    // public ResponseEntity<Role> saveRole(@RequestBody Role role) {
-    //     URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/role/save").toUriString());
-    //     return ResponseEntity.created(uri).body(roleService.saveRole(role));
-    // }
-
-    // @PostMapping("/role/addtouser")
-    // public ResponseEntity<?> addRoleToUser(@RequestBody RoleUserForm form) {
-    //     expertService.addRoleToUser(form.getUsername(), form.getRoleName());
-    //     return ResponseEntity.ok().build();
-    // }
-
     @GetMapping("/token/refresh")
     public void refreshToken(HttpServletRequest req, HttpServletResponse res) {
 

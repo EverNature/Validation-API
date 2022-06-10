@@ -17,7 +17,6 @@ public class AnimalController {
     @Autowired
     AnimalService animalService;
 
-
     @GetMapping("/invasorList")
     public ResponseEntity<AnimalIsInvasor> getInvasorAnimalsLiEntity(@RequestBody String animalNameJson) {
 
@@ -25,5 +24,4 @@ public class AnimalController {
 
         return ResponseEntity.ok().body(detectedAnimals);
     }
-
 }
