@@ -28,7 +28,6 @@ public class RecordController {
     @Autowired
     ObjectMapper mapper;
 
-    
     /** 
      * Esta función devuelve un response con el resultado de la consulta de los registros de la tabla record.
      * @param id
@@ -39,7 +38,6 @@ public class RecordController {
         return ResponseEntity.ok(recordService.getRecord(id));
     }
 
-    
     /** 
      * @return ResponseEntity<Record>
      */
@@ -49,12 +47,12 @@ public class RecordController {
     // }
 
 
-/**
- * This function is used to save a record to the database
- * 
- * @param newRecord the record that is being saved
- * @return A ResponseEntity object is being returned.
- */
+    /**
+     * This function is used to save a record to the database
+     * 
+     * @param newRecord the record that is being saved
+     * @return A ResponseEntity object is being returned.
+     */
     @PostMapping("/save")
     public ResponseEntity<Record> saveRecord(@RequestBody String newRecordJson) {
         URI uri = URI
@@ -69,7 +67,6 @@ public class RecordController {
         return ResponseEntity.created(uri).build();
     }
 
-    
     /** 
      * Esta función devuelve un response las imagenes realidas por las camaras por horas.
      * @return ResponseEntity<List<RecordsPerHour>>
@@ -78,6 +75,18 @@ public class RecordController {
     public ResponseEntity<List<RecordsPerHour>> getRecordsPerHour() {
 
         List<RecordsPerHour> records = recordService.getRecordsPerHour();
+
+        return ResponseEntity.ok().body(records);
+    }
+
+    /** 
+     * Esta función devuelve un response las imagenes realidas por las camaras por horas a lo largo de todo el tiempo.
+     * @return ResponseEntity<List<RecordsPerHour>>
+     */
+    @GetMapping("/history")
+    public ResponseEntity<List<RecordsPerHour>> getRecordsHistory() {
+
+        List<RecordsPerHour> records = recordService.getRecordsPerHourHistory();
 
         return ResponseEntity.ok().body(records);
     }

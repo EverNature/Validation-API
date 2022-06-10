@@ -20,11 +20,6 @@ public class PredictionController {
     @Autowired
     PredictionService predictionService;
 
-    // @GetMapping
-    // public ResponseEntity<List<Prediction>> getPredictions() {
-    //     return ResponseEntity.ok().body(predictionService.getPredictions());
-    // }
-
     /** 
      * Esta función devuelve una lista de predicciones de animales.
      * @return ResponseEntity<DetectedVsInvasorAnimals>
@@ -36,7 +31,6 @@ public class PredictionController {
 
         return ResponseEntity.ok().body(detectedAnimals);
     }
-
     
     /** 
      * Esta función devuelve una lista de predicciones de animales.
@@ -62,5 +56,4 @@ public class PredictionController {
 
         return ResponseEntity.ok().body(animalPrediction);
     }
-
 }
