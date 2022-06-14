@@ -20,21 +20,7 @@
 </p>
 
 ## Description
-Learning is an everyday necessity worldwide, which needs to be done the correct way
-to be effective. Information tends to fade in what is known as “the forgetting curve”, a problem
-that concerns a wide range of population. However, the fading of the data can be reverted and
-stabilised by means of various techniques. One that can be used to achieve a good procure of
-knowledge is spaced repetition. This method has been demonstrated to provide a sustainable
-capacity of memorization for its users. One of the many ways of using it is by means of the
-Leitner system, a flashcard approach that determines when is necessary to regain certain
-knowledge. Those flashcards are composed by a question and its answer, storing cards of the
-same topic in decks. Spaced repetition does not usually consider the motivation of the user.
-However, as it is highly important to maintain the user comfortable, gamification has been
-introduced to fulfil that purpose. Due to the importance of providing social interaction, a social
-network-like approach has been embraced by the application. Due to the importance of fulfilling
-the 2030 agenda of the United Nations, considering the SDGs has also been relevant. This work
-explains the development of the product, named DeckLearn, as well as its impact towards the
-established objectives and working hypotheses.
+Invasive species are a serious problem in the ecosystems in which they become established, and can lead to the extinction of local species, especially endangered ones. Here, we propose a solution, called Evern, to provide camera monitoring in natural areas. The services, created under the ITIL framework, aim to detect invasive species based on a classification process performed by Artificial Intelligence, and notify the threat to the contracting client using a message distributor and an integration framework. The implemented system is able to make accurate predictions with more than 96\% accuracy, ensuring that all camera images are treated. Thanks to Evern, it is possible to locate invasive species faster and send warnings to take appropriate action, helping to protect local species.
 
 ## Used technologies
 * [![image](https://img.shields.io/badge/Spring_Boot-F2F4F9?style=for-the-badge&logo=spring-boot)](https://spring.io/projects/spring-boot)
